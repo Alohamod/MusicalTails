@@ -150,7 +150,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 291143598601f9f409aaa7e18db91a34, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -253,7 +253,7 @@ MonoBehaviour:
   - clip: {fileID: 8300000, guid: 69d99077f13bc3f4e8c3d60c9b006bab, type: 3}
     bpm: 146
   - clip: {fileID: 8300000, guid: 291143598601f9f409aaa7e18db91a34, type: 3}
-    bpm: 115
+    bpm: 230
   - clip: {fileID: 8300000, guid: 7889a037be1f7d64c848acc200a0e40b, type: 3}
     bpm: 152
   - clip: {fileID: 8300000, guid: fb0183d0feba70142bd5a32cd23fafec, type: 3}
@@ -262,6 +262,12 @@ MonoBehaviour:
     bpm: 150
   - clip: {fileID: 8300000, guid: 67983ad39cd69ef4dbb7b0fd1f04a494, type: 3}
     bpm: 120
+  - clip: {fileID: 8300000, guid: 00dcfb0e1c1b43e4ea7466fe6c68671b, type: 3}
+    bpm: 100
+  - clip: {fileID: 8300000, guid: 84d57bfd1c4ab6443a51ba8a3933123c, type: 3}
+    bpm: 102
+  - clip: {fileID: 8300000, guid: fa3caf2ea3698334e8889d17d4732ceb, type: 3}
+    bpm: 130
   spawnDelay: 2
   bpmMultiplier: 1.05
   delayReduction: 0.05
@@ -294,7 +300,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b069abe66d900b04884e679f63d6ecce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ChartGenerator
-  trackLibrary: []
+  trackLibrary:
+  - clip: {fileID: 8300000, guid: 69d99077f13bc3f4e8c3d60c9b006bab, type: 3}
+    bpm: 146
+  - clip: {fileID: 8300000, guid: 291143598601f9f409aaa7e18db91a34, type: 3}
+    bpm: 230
+  - clip: {fileID: 8300000, guid: 7889a037be1f7d64c848acc200a0e40b, type: 3}
+    bpm: 152
+  - clip: {fileID: 8300000, guid: fb0183d0feba70142bd5a32cd23fafec, type: 3}
+    bpm: 160
+  - clip: {fileID: 8300000, guid: d0fe9ecc0d5335e408a4614c0e56e257, type: 3}
+    bpm: 150
+  - clip: {fileID: 8300000, guid: 67983ad39cd69ef4dbb7b0fd1f04a494, type: 3}
+    bpm: 120
+  - clip: {fileID: 8300000, guid: 00dcfb0e1c1b43e4ea7466fe6c68671b, type: 3}
+    bpm: 100
+  - clip: {fileID: 8300000, guid: 84d57bfd1c4ab6443a51ba8a3933123c, type: 3}
+    bpm: 102
 --- !u!1 &220940978
 GameObject:
   m_ObjectHideFlags: 0
@@ -947,7 +969,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!61 &1598571713
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1050,6 +1072,50 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HitZone
   laneIndex: 0
   triggerKey: 0
+--- !u!1 &1838364995
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1838364997}
+  - component: {fileID: 1838364996}
+  m_Layer: 0
+  m_Name: GameplayUI
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1838364996
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1838364995}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86565cdef69ac264aa161b609173f43e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameplayUIController
+--- !u!4 &1838364997
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1838364995}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1839253005
 GameObject:
   m_ObjectHideFlags: 0
@@ -1187,3 +1253,4 @@ SceneRoots:
   - {fileID: 1191381129}
   - {fileID: 544542938}
   - {fileID: 1873304894}
+  - {fileID: 1838364997}

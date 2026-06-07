@@ -16,6 +16,8 @@ public class LaneManager : MonoBehaviour
 
     void Start()
     {
+        if (GameSession.Instance != null)
+            laneCount = GameSession.Instance.laneCount;
         GenerateLanes();
     }
 
@@ -33,6 +35,11 @@ public class LaneManager : MonoBehaviour
             HitZone zoneScript = hz.GetComponent<HitZone>();
             zoneScript.laneIndex = i;
             zoneScript.triggerKey = keyBindings[i];
+
+            var keyDisplay = hz.GetComponent<HitZoneKeyDisplay>();
+            if (keyDisplay == null)
+                keyDisplay = hz.AddComponent<HitZoneKeyDisplay>();
+            keyDisplay.Setup(keyBindings[i]);
         }
 
     }

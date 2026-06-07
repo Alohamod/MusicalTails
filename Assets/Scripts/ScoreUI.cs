@@ -13,7 +13,8 @@ public class ScoreUI : MonoBehaviour
 
     void UpdateScoreText(int newScore)
     {
-        scoreText.text = $"Score: {newScore}";
+        int lanes = GameSession.Instance != null ? GameSession.Instance.laneCount : 4;
+        scoreText.text = $"Score: {newScore}  (x{lanes})";
     }
 
     void OnDestroy()

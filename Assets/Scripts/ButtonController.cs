@@ -2,7 +2,6 @@ using UnityEngine;
 using MusicalTails.Model.Core;
 using System;
 
-
 public class ButtonController : MonoBehaviour
 {
     private BaseButton _model;
@@ -27,7 +26,6 @@ public class ButtonController : MonoBehaviour
 
     void Update()
     {
-
         if (_model is Long && isHeld)
         {
             ApplyShrinkEffect();
@@ -39,9 +37,7 @@ public class ButtonController : MonoBehaviour
         {
             if (_model is DoubleButton doubleBtn && doubleBtn.IsPartiallyHit)
             {
-                int partialScore = doubleBtn.GetScore() / 2;
-                Debug.Log($"Кнопка пропущена, но засчитано 1 нажатие: +{partialScore} очков");
-
+                FindMusicManager()?.RegisterHit(doubleBtn.GetScore() / 2);
             }
             else if (!(_model is TrapButton))
             {
@@ -54,30 +50,29 @@ public class ButtonController : MonoBehaviour
 
     private void ApplyShrinkEffect()
     {
-
         _currentHeight -= globalShrinkSpeed * Time.deltaTime;
         if (_currentHeight <= 0) { Destroy(gameObject); return; }
         _renderer.size = new Vector2(1.0f, _currentHeight);
     }
-    void Awake()
-    {
-        globalScrollSpeed = 5.0f;
-        globalShrinkSpeed = 5.0f;
-    }
+
     public int GetLane() => _model != null ? _model.Lane : -1;
+
+    static MusicManager FindMusicManager() => FindAnyObjectByType<MusicManager>();
+
     public void HandleClick()
     {
         if (_model is TrapButton)
         {
-            FindObjectOfType<MusicManager>().TriggerGameOver("Ловушка!");
+            FindMusicManager()?.TriggerGameOver("Р›РѕРІСѓС€РєР°!");
             return;
         }
+
         if (_model is DoubleButton doubleBtn)
         {
             doubleBtn.ExecuteAction();
             if (doubleBtn.HitsReceived == 2)
             {
-                Debug.Log("Двойное попадание! +30 очков");
+                FindMusicManager()?.RegisterHit(doubleBtn.GetScore());
                 Destroy(gameObject);
             }
             else
@@ -88,9 +83,17 @@ public class ButtonController : MonoBehaviour
         }
 
         int points = _model.GetScore();
-        FindObjectOfType<MusicManager>().RegisterHit(points);
+        FindMusicManager()?.RegisterHit(points);
         if (_model is Short) Destroy(gameObject);
         else isHeld = true;
     }
-    public void ReleaseClick() { if (_model is Long && isHeld) Destroy(gameObject); }
+
+    public void ReleaseClick()
+    {
+        if (_model is Long longBtn && isHeld)
+        {
+            FindMusicManager()?.RegisterHit(longBtn.GetScore());
+            Destroy(gameObject);
+        }
+    }
 }

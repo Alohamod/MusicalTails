@@ -18,16 +18,20 @@ public class ChartGenerator : MonoBehaviour
         if (musicSource.clip == null) return;
 
         float bpm = 120f;
-        foreach (var t in trackLibrary) 
+        if (GameSession.Instance != null && GameSession.Instance.HasSelectedTrack)
+            bpm = GameSession.Instance.SelectedTrack.bpm;
+        else
         {
-            if (t.clip == musicSource.clip) { bpm = t.bpm; break; }
+            foreach (var t in trackLibrary)
+            {
+                if (t.clip == musicSource.clip) { bpm = t.bpm; break; }
+            }
         }
 
         List<NoteEvent> notes = new List<NoteEvent>();
         float beatInterval = 60f / bpm;
         int totalBeats = Mathf.FloorToInt(musicSource.clip.length / beatInterval);
 
-        int currentTact = -1;
         int lastLane = -1;
 
         for (int i = 0; i < totalBeats; i++)
@@ -35,26 +39,20 @@ public class ChartGenerator : MonoBehaviour
             float time = i * beatInterval;
             bool isIntro = i < 16;
             if (isIntro && notes.Count > 0 && (time - notes[notes.Count - 1].time) < beatInterval * 4)
-            {
                 continue;
-            }
             if (time < 1.0f) continue;
 
-            int tact = Mathf.FloorToInt(i / 4); 
-
-
-            int laneCount = LaneManager.Instance.laneCount;
+            int laneCount = LaneManager.Instance != null ? LaneManager.Instance.laneCount : 4;
             int newLane = GetRandomLane(lastLane, laneCount);
             lastLane = newLane;
 
-            int type = 0; 
+            int type = 0;
             float rand = UnityEngine.Random.value;
-
             float progress = (float)i / totalBeats;
 
-            if (rand < progress * 0.1f) type = 3; 
-            else if (rand < progress * 0.2f + 0.1f) type = 2; 
-            else if (UnityEngine.Random.value < 0.2f) type = 1; 
+            if (rand < progress * 0.1f) type = 3;
+            else if (rand < progress * 0.2f + 0.1f) type = 2;
+            else if (UnityEngine.Random.value < 0.2f) type = 1;
 
             notes.Add(new NoteEvent
             {
@@ -67,7 +65,7 @@ public class ChartGenerator : MonoBehaviour
 
         string json = JsonUtility.ToJson(new ChartWrapper { notes = notes }, true);
         File.WriteAllText(Application.persistentDataPath + "/chart.json", json);
-        Debug.Log("Чарты сгенерированы: " + notes.Count + " нот.");
+        Debug.Log("???? ????????????: " + notes.Count + " ???.");
     }
 
     private int GetRandomLane(int lastLane, int laneCount)
